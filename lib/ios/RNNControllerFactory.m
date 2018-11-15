@@ -175,7 +175,7 @@
 
 	NSArray *childViewControllers = [self extractChildrenViewControllersFromNode:node];
 	
-	RNNSideMenuController *sideMenu = [[RNNSideMenuController alloc] initWithLayoutInfo:layoutInfo childViewControllers:childViewControllers options:options defaultOptions:_defaultOptions presenter:presenter];
+	RNNSideMenuController *sideMenu = [[RNNSideMenuController alloc] initWithLayoutInfo:layoutInfo childViewControllers:childViewControllers options:options defaultOptions:_defaultOptions presenter:presenter eventEmitter:_eventEmitter];
 	
 	return sideMenu;
 }

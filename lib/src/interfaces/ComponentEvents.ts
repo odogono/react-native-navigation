@@ -31,3 +31,11 @@ export interface PreviewCompletedEvent extends ComponentEvent {
   componentName?: string;
   previewComponentId?: string;
 }
+
+export interface SideMenuDidAppearEvent extends ComponentEvent {
+  componentName: string;
+}
+
+export interface SideMenuDidDisappearEvent extends ComponentEvent {
+  componentName: string;
+}

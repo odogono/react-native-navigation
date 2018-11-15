@@ -39,6 +39,18 @@ class StaticLifecycleOverlay extends Component {
         events: [...this.state.events, { event: 'modalDismissed', componentId }]
       });
     }));
+    this.listeners.push(Navigation.events().registerSideMenuDidAppearListener((event) => {
+      event.event = 'sideMenuDidAppear';
+      this.setState({
+        events: [...this.state.events, { ...event }]
+      });
+    }));
+    this.listeners.push(Navigation.events().registerSideMenuDidDisappearListener((event) => {
+      event.event = 'sideMenuDidDisappear';
+      this.setState({
+        events: [...this.state.events, { ...event }]
+      });
+    }));
   }
 
   componentWillUnmount() {

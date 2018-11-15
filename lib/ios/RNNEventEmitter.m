@@ -18,6 +18,8 @@ static NSString* const ModalDismissed	        = @"RNN.ModalDismissed";
 static NSString* const SearchBarUpdated 		= @"RNN.SearchBarUpdated";
 static NSString* const SearchBarCancelPressed 	= @"RNN.SearchBarCancelPressed";
 static NSString* const PreviewCompleted         = @"RNN.PreviewCompleted";
+static NSString* const SideMenuDidAppear		= @"RNN.SideMenuDidAppear";
+static NSString* const SideMenuDidDisappear		= @"RNN.SideMenuDidDisappear";
 
 -(NSArray<NSString *> *)supportedEvents {
 	return @[AppLaunched,
@@ -29,7 +31,9 @@ static NSString* const PreviewCompleted         = @"RNN.PreviewCompleted";
 			 ModalDismissed,
 			 SearchBarUpdated,
 			 SearchBarCancelPressed,
-			 PreviewCompleted];
+			 PreviewCompleted,
+			 SideMenuDidAppear,
+			 SideMenuDidDisappear];
 }
 
 # pragma mark public
@@ -107,6 +111,23 @@ static NSString* const PreviewCompleted         = @"RNN.PreviewCompleted";
 											 @"modalsDismissed": modalsDismissed
 											 }];
 }
+
+-(void)sendSideMenuDidAppear:(NSString *)componentId componentName:(NSString*)componentName {
+	[self send:SideMenuDidAppear body:@{
+											@"componentId":componentId,
+											@"componentName": componentName
+										 }];
+}
+
+-(void)sendSideMenuDidDisappear:(NSString *)componentId componentName:(NSString*)componentName {
+	[self send:SideMenuDidDisappear body:@{
+										   	@"componentId":componentId,
+										   	@"componentName": componentName
+											}];
+}
+
+
+
 
 - (void)addListener:(NSString *)eventName {
 	[super addListener:eventName];
