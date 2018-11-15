@@ -123,6 +123,16 @@ public class BottomTabsController extends ParentController implements AHBottomNa
     }
 
     @Override
+    public void sendSideMenuAppeared(){
+        getCurrentChild().sendSideMenuAppeared();
+    }
+
+    @Override
+    public void sendSideMenuDisappeared(){
+        getCurrentChild().sendSideMenuDisappeared();
+    }
+
+    @Override
     protected ViewController getCurrentChild() {
         return tabs.get(bottomTabs.getCurrentItem());
     }

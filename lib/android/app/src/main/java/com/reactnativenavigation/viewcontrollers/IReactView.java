@@ -20,6 +20,10 @@ public interface IReactView extends Destroyable {
 
     void sendOnNavigationButtonPressed(String buttonId);
 
+    void sendSideMenuAppeared();
+
+    void sendSideMenuDisappeared();
+
     ScrollEventListener getScrollEventListener();
 
     void dispatchTouchEventToJs(MotionEvent event);

@@ -47,6 +47,16 @@ public class SimpleOverlay extends RelativeLayout implements IReactView {
     }
 
     @Override
+    public void sendSideMenuAppeared(){
+        
+    }
+
+    @Override
+    public void sendSideMenuDisappeared(){
+
+    }
+
+    @Override
     public void sendOnNavigationButtonPressed(String buttonId) {
 
     }

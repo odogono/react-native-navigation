@@ -45,6 +45,16 @@ public class TestComponentLayout extends ComponentLayout implements TitleBarButt
     }
 
     @Override
+    public void sendSideMenuAppeared(){
+        reactView.sendSideMenuAppeared();
+    }
+
+    @Override
+    public void sendSideMenuDisappeared(){
+        reactView.sendSideMenuDisappeared();
+    }
+
+    @Override
     public void applyOptions(Options options) {
 
     }

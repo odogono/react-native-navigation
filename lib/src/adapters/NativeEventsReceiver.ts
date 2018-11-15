@@ -70,12 +70,10 @@ export class NativeEventsReceiver {
   }
 
   public registerSideMenuDidAppearListener(callback: (event: SideMenuDidAppearEvent) => void): EventSubscription {
-    console.log('[DEBUG]','[registerSideMenuDidAppearListener]', event);
     return this.emitter.addListener('RNN.SideMenuDidAppear', callback);
   }
 
   public registerSideMenuDidDisappearListener(callback: (event: SideMenuDidDisappearEvent) => void): EventSubscription {
-    console.log('[DEBUG]','[registerSideMenuDidDisappearListener]', event);
     return this.emitter.addListener('RNN.SideMenuDidDisappear', callback);
   }
 }

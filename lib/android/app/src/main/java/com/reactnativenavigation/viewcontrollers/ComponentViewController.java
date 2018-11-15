@@ -48,6 +48,16 @@ public class ComponentViewController extends ChildController<ComponentLayout> {
     }
 
     @Override
+    public void sendSideMenuAppeared(){
+        getView().sendSideMenuAppeared();
+    }
+
+    @Override
+    public void sendSideMenuDisappeared(){
+        getView().sendSideMenuDisappeared();
+    }
+
+    @Override
     public void applyOptions(Options options) {
         super.applyOptions(options);
         view.applyOptions(options);

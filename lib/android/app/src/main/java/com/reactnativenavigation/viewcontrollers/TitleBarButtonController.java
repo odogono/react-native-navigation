@@ -83,6 +83,16 @@ public class TitleBarButtonController extends ViewController<TitleBarReactButton
         getView().sendOnNavigationButtonPressed(buttonId);
     }
 
+    @Override
+    public void sendSideMenuAppeared(){
+        getView().sendSideMenuAppeared();
+    }
+
+    @Override
+    public void sendSideMenuDisappeared(){
+        getView().sendSideMenuDisappeared();
+    }
+
     @NonNull
     @Override
     protected TitleBarReactButtonView createView() {

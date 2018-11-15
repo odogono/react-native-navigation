@@ -82,7 +82,9 @@ public class LayoutFactory {
 
     private ViewController createSideMenuRoot(LayoutNode node) {
 		SideMenuController sideMenuController = new SideMenuController(activity,
+                reactInstanceManager,
                 childRegistry,
+                eventEmitter,
                 node.id,
                 parse(typefaceManager, node.getOptions()),
                 new SideMenuPresenter(),

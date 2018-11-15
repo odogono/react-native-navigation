@@ -114,6 +114,16 @@ public class SimpleViewController extends ChildController<SimpleViewController.S
         }
 
         @Override
+        public void sendSideMenuAppeared(){
+    
+        }
+
+        @Override
+        public void sendSideMenuDisappeared(){
+        
+        }
+
+        @Override
         public void sendOnNavigationButtonPressed(String buttonId) {
 
         }

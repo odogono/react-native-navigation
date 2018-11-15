@@ -123,6 +123,16 @@ public class Navigator extends ParentController {
 
     }
 
+    @Override
+    public void sendSideMenuAppeared(){
+
+    }
+
+    @Override
+    public void sendSideMenuDisappeared(){
+
+    }
+
     public void setRoot(final ViewController viewController, CommandListener commandListener) {
         destroyRoot();
         if (isRootNotCreated()) {

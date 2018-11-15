@@ -9,30 +9,39 @@ import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
 
+import com.facebook.react.ReactInstanceManager;
+
 import com.reactnativenavigation.parse.Options;
 import com.reactnativenavigation.parse.SideMenuOptions;
 import com.reactnativenavigation.presentation.Presenter;
 import com.reactnativenavigation.presentation.SideMenuPresenter;
+import com.reactnativenavigation.react.EventEmitter;
 import com.reactnativenavigation.utils.CommandListener;
 import com.reactnativenavigation.viewcontrollers.ChildControllersRegistry;
 import com.reactnativenavigation.viewcontrollers.ParentController;
 import com.reactnativenavigation.viewcontrollers.ViewController;
 import com.reactnativenavigation.views.Component;
+import com.reactnativenavigation.views.ComponentLayout;
 
 import java.util.ArrayList;
 import java.util.Collection;
 
 import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
 
+
 public class SideMenuController extends ParentController<DrawerLayout> {
 
 	private ViewController center;
 	private ViewController left;
 	private ViewController right;
+    private EventEmitter eventEmitter;
     private SideMenuPresenter presenter;
+    private ReactInstanceManager reactInstanceManager;
 
-    public SideMenuController(Activity activity, ChildControllersRegistry childRegistry, String id, Options initialOptions, SideMenuPresenter sideMenuOptionsPresenter, Presenter presenter) {
+    public SideMenuController(Activity activity, ReactInstanceManager reactInstanceManager, ChildControllersRegistry childRegistry, EventEmitter eventEmitter, String id, Options initialOptions, SideMenuPresenter sideMenuOptionsPresenter, Presenter presenter) {
 		super(activity, childRegistry, id, presenter, initialOptions);
+        this.reactInstanceManager = reactInstanceManager;
+        this.eventEmitter = eventEmitter;
         this.presenter = sideMenuOptionsPresenter;
     }
 
@@ -50,9 +59,41 @@ public class SideMenuController extends ParentController<DrawerLayout> {
 	@Override
 	protected DrawerLayout createView() {
         DrawerLayout sideMenu = new DrawerLayout(getActivity());
+        sideMenu.addDrawerListener( new DrawerLayout.DrawerListener() {
+            @Override
+            public void onDrawerSlide( View drawerView, float slideOffset ){
+
+            }
+
+            @Override
+            public void onDrawerOpened( View drawerView ){
+                SideMenuController.this.getCurrentChild().sendSideMenuAppeared();
+            }
+
+            @Override
+            public void onDrawerClosed( View drawerView ){
+                ((ComponentLayout) drawerView).sendSideMenuDisappeared();
+            }
+
+            @Override
+            public void onDrawerStateChanged( int newState ){
+
+            }
+        });
         presenter.bindView(sideMenu);
         return sideMenu;
 	}
+
+    @Override
+    public void sendSideMenuAppeared(){
+        
+    }
+
+    @Override
+    public void sendSideMenuDisappeared(){
+
+    }
+
 
     @Override
     public void sendOnNavigationButtonPressed(String buttonId) {
