@@ -82,6 +82,7 @@ public class NavigationReactNativeHost extends ReactNativeHost implements Bundle
                 .setUseDeveloperSupport(getUseDeveloperSupport())
                 .setRedBoxHandler(getRedBoxHandler())
                 .setJavaScriptExecutorFactory(getJavaScriptExecutorFactory())
+                .setUIImplementationProvider(getUIImplementationProvider())
                 .setInitialLifecycleState(LifecycleState.BEFORE_CREATE)
                 .setDevBundleDownloadListener(getDevBundleDownloadListener());
 

@@ -7,6 +7,7 @@ import com.facebook.react.bridge.ReadableArray;
 import com.facebook.react.bridge.ReadableMap;
 import com.facebook.react.uimanager.ThemedReactContext;
 import com.facebook.react.uimanager.UIImplementation;
+import com.facebook.react.uimanager.UIImplementationProvider;
 import com.facebook.react.uimanager.UIManagerModule;
 import com.facebook.react.uimanager.ViewManager;
 import com.facebook.react.uimanager.common.MeasureSpecProvider;
@@ -18,6 +19,18 @@ import java.util.List;
 @SuppressWarnings("WeakerAccess")
 public class SyncUiImplementation extends UIImplementation {
     private static final Object lock = new Object();
+
+    public static class Provider extends UIImplementationProvider {
+        @Override
+        public UIImplementation createUIImplementation(ReactApplicationContext reactContext, List<ViewManager> viewManagerList, EventDispatcher eventDispatcher, int minTimeLeftInFrameForNonBatchedOperationMs) {
+            return new SyncUiImplementation(reactContext, viewManagerList, eventDispatcher, minTimeLeftInFrameForNonBatchedOperationMs);
+        }
+
+        @Override
+        public UIImplementation createUIImplementation(ReactApplicationContext reactContext, UIManagerModule.ViewManagerResolver viewManagerResolver, EventDispatcher eventDispatcher, int minTimeLeftInFrameForNonBatchedOperationMs) {
+            return new SyncUiImplementation(reactContext, viewManagerResolver, eventDispatcher, minTimeLeftInFrameForNonBatchedOperationMs);
+        }
+    }
 
     public SyncUiImplementation(ReactApplicationContext reactContext, List<ViewManager> viewManagerList, EventDispatcher eventDispatcher, int minTimeLeftInFrameForNonBatchedOperationMs) {
         super(reactContext, viewManagerList, eventDispatcher, minTimeLeftInFrameForNonBatchedOperationMs);
