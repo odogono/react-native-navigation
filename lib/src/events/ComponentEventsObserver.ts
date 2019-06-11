@@ -8,7 +8,9 @@ import {
   SearchBarCancelPressedEvent,
   ComponentEvent,
   PreviewCompletedEvent,
-  ModalDismissedEvent
+  ModalDismissedEvent,
+  SideMenuDidAppearEvent,
+  SideMenuDidDisappearEvent
 } from '../interfaces/ComponentEvents';
 import { NativeEventsReceiver } from '../adapters/NativeEventsReceiver';
 
@@ -24,6 +26,8 @@ export class ComponentEventsObserver {
     this.notifySearchBarUpdated = this.notifySearchBarUpdated.bind(this);
     this.notifySearchBarCancelPressed = this.notifySearchBarCancelPressed.bind(this);
     this.notifyPreviewCompleted = this.notifyPreviewCompleted.bind(this);
+    this.notifySideMenuDidAppear = this.notifySideMenuDidAppear.bind(this);
+    this.notifySideMenuDidDisappear = this.notifySideMenuDidDisappear.bind(this);
   }
 
   public registerOnceForAllComponentEvents() {
@@ -36,6 +40,8 @@ export class ComponentEventsObserver {
     this.nativeEventsReceiver.registerSearchBarUpdatedListener(this.notifySearchBarUpdated);
     this.nativeEventsReceiver.registerSearchBarCancelPressedListener(this.notifySearchBarCancelPressed);
     this.nativeEventsReceiver.registerPreviewCompletedListener(this.notifyPreviewCompleted);
+    this.nativeEventsReceiver.registerSideMenuDidAppearListener(this.notifySideMenuDidAppear);
+    this.nativeEventsReceiver.registerSideMenuDidDisappearListener(this.notifySideMenuDidDisappear);
   }
 
   public bindComponent(component: React.Component<any>, componentId?: string): EventSubscription {
@@ -83,6 +89,14 @@ export class ComponentEventsObserver {
 
   notifyPreviewCompleted(event: PreviewCompletedEvent) {
     this.triggerOnAllListenersByComponentId(event, 'previewCompleted');
+  }
+
+  notifySideMenuDidAppear(event: SideMenuDidAppearEvent) {
+    this.triggerOnAllListenersByComponentId(event, 'sideMenuDidAppear');
+  }
+
+  notifySideMenuDidDisappear(event: SideMenuDidDisappearEvent) {
+    this.triggerOnAllListenersByComponentId(event, 'sideMenuDidDisappear');
   }
 
   private triggerOnAllListenersByComponentId(event: ComponentEvent, method: string) {

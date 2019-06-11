@@ -345,6 +345,16 @@ public class StackController extends ParentController<StackLayout> {
         peek().sendOnNavigationButtonPressed(buttonId);
     }
 
+    @Override
+    public void sendSideMenuAppeared(){
+        peek().sendSideMenuAppeared();
+    }
+
+    @Override
+    public void sendSideMenuDisappeared(){
+        peek().sendSideMenuDisappeared();
+    }
+
     @NonNull
     @Override
     public Collection<ViewController> getChildControllers() {

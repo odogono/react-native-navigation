@@ -15,6 +15,8 @@ public class EventEmitter {
 	private static final String ComponentDidDisappear   = "RNN.ComponentDidDisappear";
 	private static final String NavigationButtonPressed = "RNN.NavigationButtonPressed";
     private static final String ModalDismissed          = "RNN.ModalDismissed";
+	private static final String SideMenuDidAppear 		= "RNN.SideMenuDidAppear";
+	private static final String SideMenuDidDisappear 	= "RNN.SideMenuDidDisappear";
 
 	private final RCTDeviceEventEmitter emitter;
 
@@ -67,6 +69,20 @@ public class EventEmitter {
         event.putInt("modalsDismissed", modalsDismissed);
         emit(ModalDismissed, event);
     }
+
+	public void emitSideMenuDidAppear(String id, String componentName) {
+		WritableMap event = Arguments.createMap();
+		event.putString("componentId", id);
+		event.putString("componentName", componentName);
+		emit(SideMenuDidAppear, event);
+	}
+
+	public void emitSideMenuDidDisappear(String id, String componentName) {
+		WritableMap event = Arguments.createMap();
+		event.putString("componentId", id);
+		event.putString("componentName", componentName);
+		emit(SideMenuDidDisappear, event);
+	}
 
 	private void emit(String eventName) {
 		emit(eventName, Arguments.createMap());

@@ -39,6 +39,16 @@ public class ExternalComponentViewController extends ViewController<ExternalComp
         }
     }
 
+    @Override
+    public void sendSideMenuAppeared(){
+
+    }
+
+    @Override
+    public void sendSideMenuDisappeared(){
+
+    }
+
     public FragmentActivity getActivity() {
         return (FragmentActivity) super.getActivity();
     }

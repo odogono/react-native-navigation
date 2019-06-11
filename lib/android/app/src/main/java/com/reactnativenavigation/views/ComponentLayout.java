@@ -60,6 +60,16 @@ public class ComponentLayout extends FrameLayout implements ReactComponent, Titl
 		reactView.sendComponentStop();
 	}
 
+    @Override
+    public void sendSideMenuAppeared(){
+        reactView.sendSideMenuAppeared();
+    }
+
+    @Override
+    public void sendSideMenuDisappeared(){
+        reactView.sendSideMenuDisappeared();
+    }
+
     public void applyOptions(Options options) {
         touchDelegate.setInterceptTouchOutside(options.overlayOptions.interceptTouchOutside);
     }

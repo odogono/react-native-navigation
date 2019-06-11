@@ -26,5 +26,8 @@
 
 - (void)sendModalsDismissedEvent:(NSString *)componentId numberOfModalsDismissed:(NSNumber *)modalsDismissed;
 
+-(void)sendSideMenuDidAppear:(NSString *)componentId componentName:(NSString*)componentName;
+
+-(void)sendSideMenuDidDisappear:(NSString *)componentId componentName:(NSString*)componentName;
 
 @end

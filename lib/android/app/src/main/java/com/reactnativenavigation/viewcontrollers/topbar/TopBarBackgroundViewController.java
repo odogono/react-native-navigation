@@ -47,6 +47,16 @@ public class TopBarBackgroundViewController extends ViewController<TopBarBackgro
 
     }
 
+    @Override
+    public void sendSideMenuAppeared(){
+
+    }
+
+    @Override
+    public void sendSideMenuDisappeared(){
+
+    }
+
     public void setComponent(Component component) {
         this.component = component;
     }

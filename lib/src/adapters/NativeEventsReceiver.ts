@@ -7,7 +7,9 @@ import {
   SearchBarUpdatedEvent,
   SearchBarCancelPressedEvent,
   PreviewCompletedEvent,
-  ModalDismissedEvent
+  ModalDismissedEvent,
+  SideMenuDidAppearEvent,
+  SideMenuDidDisappearEvent
 } from '../interfaces/ComponentEvents';
 import { CommandCompletedEvent, BottomTabSelectedEvent } from '../interfaces/Events';
 
@@ -65,5 +67,13 @@ export class NativeEventsReceiver {
 
   public registerBottomTabSelectedListener(callback: (data: BottomTabSelectedEvent) => void): EventSubscription {
     return this.emitter.addListener('RNN.BottomTabSelected', callback);
+  }
+
+  public registerSideMenuDidAppearListener(callback: (event: SideMenuDidAppearEvent) => void): EventSubscription {
+    return this.emitter.addListener('RNN.SideMenuDidAppear', callback);
+  }
+
+  public registerSideMenuDidDisappearListener(callback: (event: SideMenuDidDisappearEvent) => void): EventSubscription {
+    return this.emitter.addListener('RNN.SideMenuDidDisappear', callback);
   }
 }

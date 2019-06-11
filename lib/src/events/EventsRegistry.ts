@@ -9,7 +9,9 @@ import {
   SearchBarUpdatedEvent,
   SearchBarCancelPressedEvent,
   PreviewCompletedEvent,
-  ModalDismissedEvent
+  ModalDismissedEvent,
+  SideMenuDidAppearEvent,
+  SideMenuDidDisappearEvent
 } from '../interfaces/ComponentEvents';
 import { CommandCompletedEvent, BottomTabSelectedEvent } from '../interfaces/Events';
 
@@ -58,6 +60,14 @@ export class EventsRegistry {
 
   public registerCommandListener(callback: (name: string, params: any) => void): EventSubscription {
     return this.commandsObserver.register(callback);
+  }
+
+  public registerSideMenuDidAppearListener(callback: (event: SideMenuDidAppearEvent) => void): EventSubscription {
+    return this.nativeEventsReceiver.registerSideMenuDidAppearListener(callback);
+  }
+
+  public registerSideMenuDidDisappearListener(callback: (event: SideMenuDidDisappearEvent) => void): EventSubscription {
+    return this.nativeEventsReceiver.registerSideMenuDidDisappearListener(callback);
   }
 
   public bindComponent(component: React.Component<any>, componentId?: string): EventSubscription {

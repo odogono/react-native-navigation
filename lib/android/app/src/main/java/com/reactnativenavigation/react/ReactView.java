@@ -88,6 +88,22 @@ public class ReactView extends ReactRootView implements IReactView {
 	}
 
     @Override
+	public void sendSideMenuAppeared(){
+        ReactContext currentReactContext = reactInstanceManager.getCurrentReactContext();
+        if (currentReactContext != null) {
+            new EventEmitter(currentReactContext).emitSideMenuDidAppear(componentId, componentName);
+        }
+    }
+
+    @Override
+	public void sendSideMenuDisappeared(){
+        ReactContext currentReactContext = reactInstanceManager.getCurrentReactContext();
+        if (currentReactContext != null) {
+            new EventEmitter(currentReactContext).emitSideMenuDidDisappear(componentId, componentName);
+        }
+    }
+
+    @Override
     public ScrollEventListener getScrollEventListener() {
         return new ScrollEventListener(getEventDispatcher());
     }

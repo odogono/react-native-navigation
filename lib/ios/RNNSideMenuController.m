@@ -13,10 +13,23 @@
 
 @implementation RNNSideMenuController
 
-- (instancetype)initWithLayoutInfo:(RNNLayoutInfo *)layoutInfo childViewControllers:(NSArray *)childViewControllers options:(RNNNavigationOptions *)options defaultOptions:(RNNNavigationOptions *)defaultOptions presenter:(RNNViewControllerPresenter *)presenter {
+- (instancetype)initWithLayoutInfo:(RNNLayoutInfo *)layoutInfo
+			  childViewControllers:(NSArray *)childViewControllers
+						   options:(RNNNavigationOptions *)options
+					defaultOptions:(RNNNavigationOptions *)defaultOptions
+						 presenter:(RNNViewControllerPresenter *)presenter
+					  eventEmitter:(RNNEventEmitter *)eventEmitter {
+	self = [self initWithLayoutInfo:layoutInfo childViewControllers:childViewControllers options:options defaultOptions:defaultOptions presenter:presenter];
+	
+	_eventEmitter = eventEmitter;
+	
+	return self;
+}
+
+- (instancetype)initWithLayoutInfo:(RNNLayoutInfo *)layoutInfo childViewControllers:(NSArray *)childViewControllers options:(RNNNavigationOptions *)options defaultOptions:(RNNNavigationOptions *)defaultOptions  presenter:(RNNViewControllerPresenter *)presenter {
 	[self setControllers:childViewControllers];
 	self = [super initWithCenterViewController:self.center leftDrawerViewController:self.left rightDrawerViewController:self.right];
-	
+
 	self.presenter = presenter;
 	[self.presenter bindViewController:self];
 	
@@ -33,6 +46,29 @@
 	// Fixes #3697
 	[self setExtendedLayoutIncludesOpaqueBars:YES];
 	self.edgesForExtendedLayout |= UIRectEdgeBottom;
+
+	__weak typeof(self) weakSelf = self;
+	__block MMDrawerSide startingDrawerSide = self.openSide;
+	
+	[self setGestureStartBlock:^(MMDrawerController *drawerController, UIGestureRecognizer *gesture) {
+		// store the current drawer state to compare when the gesture has completed
+		startingDrawerSide = weakSelf.openSide;
+	}];
+	
+	[self setGestureCompletionBlock:^(MMDrawerController *drawerController, UIGestureRecognizer *gesture) {
+		MMDrawerSide endingDrawerSide = weakSelf.openSide;
+		
+		if( startingDrawerSide == MMDrawerSideNone ){
+			if( endingDrawerSide != MMDrawerSideNone ){
+				RNNLayoutInfo *sideInfo = [weakSelf layoutInfoForSide:endingDrawerSide];
+				[weakSelf.eventEmitter sendSideMenuDidAppear:sideInfo.componentId componentName:sideInfo.name ];
+			}
+		} else {
+			RNNLayoutInfo *sideInfo = [weakSelf layoutInfoForSide:startingDrawerSide];
+			
+			[weakSelf.eventEmitter sendSideMenuDidDisappear:sideInfo.componentId componentName:sideInfo.name ];
+		}
+	}];
 	
 	return self;
 }
@@ -98,11 +134,31 @@
 }
 
 -(void)showSideMenu:(MMDrawerSide)side animated:(BOOL)animated {
-	[self openDrawerSide:side animated:animated completion:nil];
+	__weak typeof(self) weakSelf = self;
+	[self openDrawerSide:side animated:animated completion:^(BOOL finished){
+		RNNLayoutInfo *sideInfo = [self layoutInfoForSide:side];
+		[weakSelf.eventEmitter sendSideMenuDidAppear:sideInfo.componentId componentName:sideInfo.name];
+	}];
 }
 
 -(void)hideSideMenu:(MMDrawerSide)side animated:(BOOL)animated {
-	[self closeDrawerAnimated:animated completion:nil];
+	__weak typeof(self) weakSelf = self;
+	
+	[self closeDrawerAnimated:animated completion:^(BOOL finished){
+		RNNLayoutInfo *sideInfo = [self layoutInfoForSide:side];
+		[weakSelf.eventEmitter sendSideMenuDidDisappear:sideInfo.componentId componentName:sideInfo.name];
+	}];
+}
+
+-(RNNLayoutInfo*) layoutInfoForSide:(MMDrawerSide) side {
+	switch (side) {
+		case MMDrawerSideLeft:
+			return self.left.child.layoutInfo;
+		case MMDrawerSideRight:
+			return self.right.child.layoutInfo;
+		default:
+			return nil;
+	}
 }
 
 - (void)side:(MMDrawerSide)side enabled:(BOOL)enabled {

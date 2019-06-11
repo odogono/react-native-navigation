@@ -41,6 +41,16 @@ public class TitleBarReactViewController extends ViewController<TitleBarReactVie
 
     }
 
+    @Override
+    public void sendSideMenuAppeared(){
+
+    }
+
+    @Override
+    public void sendSideMenuDisappeared(){
+
+    }
+
     public void setComponent(Component component) {
         this.component = component;
     }

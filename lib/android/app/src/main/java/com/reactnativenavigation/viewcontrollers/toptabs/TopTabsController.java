@@ -82,6 +82,16 @@ public class TopTabsController extends ParentController<TopTabsViewPager> {
     }
 
     @Override
+    public void sendSideMenuAppeared(){
+
+    }
+
+    @Override
+    public void sendSideMenuDisappeared(){
+
+    }
+
+    @Override
     public void applyOptions(Options options) {
         super.applyOptions(options);
         getView().applyOptions(options);

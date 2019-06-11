@@ -276,6 +276,10 @@ public abstract class ViewController<T extends ViewGroup> implements ViewTreeObs
 
     public abstract void sendOnNavigationButtonPressed(String buttonId);
 
+    public abstract void sendSideMenuAppeared();
+
+    public abstract void sendSideMenuDisappeared();
+
     public boolean isViewShown() {
         return !isDestroyed &&
                getView().isShown() &&
